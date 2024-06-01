@@ -12,7 +12,7 @@ const relayInfo = {
 };
 
 // Relay favicon
-const relayIcon = "https://workers.cloudflare.com/resources/logo/logo.svg";
+const relayIcon = "https://raw.githubusercontent.com/Spl0itable/unostr/main/unostr-favicon-min.png";
 
 // Nostr address NIP-05 verified users
 const nip05Users = {
