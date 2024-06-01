@@ -2,7 +2,7 @@
 
 # UNOstr
 
-UNOstr is a serverless [Nostr](https://github.com/fiatjaf/nostr) relay purpose-built for [Cloudflare Workers](https://workers.cloudflare.com/) that ONLY requests events from all online relays using the nostr.watch [API](https://api.nostr.watch/). 
+Unlike relays that blast events such as [Blastr](https://github.com/MutinyWallet/blastr), UNOstr is a reverse [Nostr](https://github.com/fiatjaf/nostr) relay purpose-built for [Cloudflare Workers](https://workers.cloudflare.com/) that ONLY requests events from all online relays using the nostr.watch [API](https://api.nostr.watch/). 
 
 This relay relay will stream as many possible events from as many possible online relays. This relay does NOT support saving or blasting events.
 
