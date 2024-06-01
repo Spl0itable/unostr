@@ -2021,10 +2021,11 @@ var relayInfo = {
   description: "A reverse Nostr relay that ONLY requests events from all online relays",
   pubkey: "d49a9023a21dba1b3c8306ca369bf3243d8b44b8f0b6d1196607f7b0990fa8df",
   contact: "lucas@censorship.rip",
+  supported_nips: [],
   software: "https://github.com/Spl0itable/unostr",
   version: "0.0.1"
 };
-var relayIcon = "https://workers.cloudflare.com/resources/logo/logo.svg";
+var relayIcon = "https://raw.githubusercontent.com/Spl0itable/unostr/main/unostr-favicon-min.png";
 var nip05Users = {
   "lucas": "d49a9023a21dba1b3c8306ca369bf3243d8b44b8f0b6d1196607f7b0990fa8df"
   // ... more NIP-05 verified users
@@ -2194,8 +2195,18 @@ async function getOnlineRelays() {
       const data = await response.json();
       return data;
     } else {
-      console.error(`Failed to fetch online relays. Status: ${response.status}`);
-      return [];
+      console.error(`Failed to fetch online relays from primary endpoint. Status: ${response.status}`);
+      console.log("Trying backup endpoint...");
+      const backupResponse = await fetch("https://raw.githubusercontent.com/Spl0itable/unostr/main/relays");
+      if (backupResponse.ok) {
+        const backupData = await backupResponse.text();
+        const relays = backupData.split("\n").filter((relay) => relay.trim() !== "");
+        console.log("Fetched relays from backup endpoint.");
+        return relays;
+      } else {
+        console.error(`Failed to fetch online relays from backup endpoint. Status: ${backupResponse.status}`);
+        return [];
+      }
     }
   } catch (error) {
     console.error("Error fetching online relays:", error);
