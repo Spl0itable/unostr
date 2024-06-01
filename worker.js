@@ -197,8 +197,18 @@ async function getOnlineRelays() {
       const data = await response.json();
       return data;
     } else {
-      console.error(`Failed to fetch online relays. Status: ${response.status}`);
-      return [];
+      console.error(`Failed to fetch online relays from primary endpoint. Status: ${response.status}`);
+      console.log("Trying backup endpoint...");
+      const backupResponse = await fetch("https://raw.githubusercontent.com/Spl0itable/unostr/main/relays");
+      if (backupResponse.ok) {
+        const backupData = await backupResponse.text();
+        const relays = backupData.split("\n").filter((relay) => relay.trim() !== "");
+        console.log("Fetched relays from backup endpoint.");
+        return relays;
+      } else {
+        console.error(`Failed to fetch online relays from backup endpoint. Status: ${backupResponse.status}`);
+        return [];
+      }
     }
   } catch (error) {
     console.error("Error fetching online relays:", error);
