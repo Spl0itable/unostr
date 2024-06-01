@@ -1,4 +1,4 @@
-![UNOstr](unostr.jpg)
+![UNOstr](/unostr.jpg)
 
 # UNOstr
 
